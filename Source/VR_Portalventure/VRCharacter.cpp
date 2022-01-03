@@ -9,6 +9,8 @@
 #include "Animation/SkeletalMeshActor.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Animation/AnimSingleNodeInstance.h"
+#include "Engine/StaticMeshActor.h"
+#include "GameFramework/Actor.h"
 
 // Sets default values
 AVRCharacter::AVRCharacter()
@@ -80,8 +82,17 @@ void AVRCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	PlayerInputComponent->BindAxis(TEXT("GoForwardBackward"), this, &AVRCharacter::moveForwardBackward);
 	PlayerInputComponent->BindAxis(TEXT("GoRightLeft"), this, &AVRCharacter::moveRightLeft);
 
-	PlayerInputComponent->BindAxis(TEXT("GrabRight"), this, &AVRCharacter::moveRightHandFinger);
-	PlayerInputComponent->BindAxis(TEXT("GrabLeft"), this, &AVRCharacter::moveLeftHandFinger);
+	PlayerInputComponent->BindAxis(TEXT("MoveRightHand"), this, &AVRCharacter::moveRightHandFinger);
+	PlayerInputComponent->BindAxis(TEXT("MoveLeftHand"), this, &AVRCharacter::moveLeftHandFinger);
+
+	PlayerInputComponent->BindAction(TEXT("GrabLeft"), IE_Pressed, this, &AVRCharacter::grabLeftHand);
+	PlayerInputComponent->BindAction(TEXT("GrabLeft"), IE_Released, this, &AVRCharacter::releaseLeftHand);
+
+	PlayerInputComponent->BindAction(TEXT("GrabRight"), IE_Pressed, this, &AVRCharacter::grabRightHand);
+	PlayerInputComponent->BindAction(TEXT("GrabRight"), IE_Released, this, &AVRCharacter::releaseRightHand);
+
+	PlayerInputComponent->BindAction(TEXT("PressLeft"), IE_Pressed, this, &AVRCharacter::pressLeft);
+	PlayerInputComponent->BindAction(TEXT("PressRight"), IE_Pressed, this, &AVRCharacter::pressRight);
 }
 
 void AVRCharacter::moveForwardBackward(float moveY){
@@ -94,15 +105,37 @@ void AVRCharacter::moveRightLeft(float moveX){
 
 void AVRCharacter::moveRightHandFinger(float moveF){
 	TheRightController->handPower = moveF;
-	//UE_LOG(LogTemp, Warning, TEXT("%f"), moveF);
-	//FVector BlendParams(50.0f, 0.0f, 0.0f);
-    //MyMesh->GetSingleNodeInstance()->SetBlendSpaceInput(BlendParams);
 }
 
 void AVRCharacter::moveLeftHandFinger(float moveF){
 	TheLeftController->handPower = moveF;
-	//UE_LOG(LogTemp, Warning, TEXT("%f"), moveF);
-	//FVector BlendParams(50.0f, 0.0f, 0.0f);
-    //MyMesh->GetSingleNodeInstance()->SetBlendSpaceInput(BlendParams);
+}
+
+void AVRCharacter::grabLeftHand(){
+	TheLeftController->GrabObject(TheRightController);
+	UE_LOG(LogTemp, Warning, TEXT("Grab left"));
+}
+
+void AVRCharacter::releaseLeftHand(){
+	TheLeftController->LetGoObject();
+	UE_LOG(LogTemp, Warning, TEXT("Release left"));
+}
+
+void AVRCharacter::grabRightHand(){
+	TheRightController->GrabObject(TheLeftController);
+	
+}
+
+void AVRCharacter::releaseRightHand(){
+	TheRightController->LetGoObject();
+	UE_LOG(LogTemp, Warning, TEXT("Release right"));
+}
+
+void AVRCharacter::pressLeft(){
+	UE_LOG(LogTemp, Warning, TEXT("Press left"));
+}
+
+void AVRCharacter::pressRight(){
+	UE_LOG(LogTemp, Warning, TEXT("Press right"));
 }
 

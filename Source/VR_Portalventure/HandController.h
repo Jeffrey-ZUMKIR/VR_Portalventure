@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "MotionControllerComponent.h"
+#include "GrabbableObject.h"
+#include "Engine/EngineTypes.h"
 #include "HandController.generated.h"
 
 UCLASS()
@@ -19,6 +21,18 @@ public:
 	void SetHand(EControllerHand Hand){
 		MotionController->SetTrackingSource(Hand);
 	}
+
+	USkeletalMeshComponent* GetSkelMesh(){
+		return MySkelMesh;
+	}
+
+	USceneComponent* GetScHand(){
+		return ScHand;
+	}
+
+	void GrabObject(AHandController *otherController);
+
+	void LetGoObject();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	float handPower = 0.f;
@@ -35,7 +49,15 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	class UMotionControllerComponent* MotionController;
 
+	UPROPERTY(EditAnywhere)
+	USkeletalMeshComponent *MySkelMesh;
+
+	UPROPERTY(EditAnywhere)
+	class USceneComponent *ScHand;
+
 	UPROPERTY()
 	USkeletalMeshComponent *MyMesh;
 
+	UPROPERTY()
+	AGrabbableObject* thingGrabbed;
 };

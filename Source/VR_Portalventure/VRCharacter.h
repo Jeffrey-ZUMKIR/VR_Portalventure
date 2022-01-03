@@ -7,6 +7,7 @@
 
 #include "Camera/CameraComponent.h"
 #include "Animation/BlendSpace1D.h"
+#include "GrabbableObject.h"
 
 
 #include "VRCharacter.generated.h"
@@ -39,6 +40,15 @@ private:
 
 	void moveRightHandFinger(float moveF);
 	void moveLeftHandFinger(float moveF);
+
+	void grabLeftHand();
+	void releaseLeftHand();
+
+	void grabRightHand();
+	void releaseRightHand();
+
+	void pressLeft();
+	void pressRight();
 
 private:
 	UPROPERTY()
