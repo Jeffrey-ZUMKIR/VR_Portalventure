@@ -132,10 +132,12 @@ void AVRCharacter::releaseRightHand(){
 }
 
 void AVRCharacter::pressLeft(){
+	TheLeftController->PressObject();
 	UE_LOG(LogTemp, Warning, TEXT("Press left"));
 }
 
 void AVRCharacter::pressRight(){
+	TheRightController->PressObject();
 	UE_LOG(LogTemp, Warning, TEXT("Press right"));
 }
 

@@ -6,6 +6,9 @@
 #include "GameFramework/Actor.h"
 #include "MotionControllerComponent.h"
 #include "GrabbableObject.h"
+#include "IsPressable.h"
+#include "PressableObject.h"
+#include "IsRotable.h"
 #include "Engine/EngineTypes.h"
 #include "HandController.generated.h"
 
@@ -34,6 +37,8 @@ public:
 
 	void LetGoObject();
 
+	void PressObject();
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	float handPower = 0.f;
 
@@ -60,4 +65,7 @@ private:
 
 	UPROPERTY()
 	AGrabbableObject* thingGrabbed;
+
+	UPROPERTY()
+		UIsRotable* thingRotate;
 };
