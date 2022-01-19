@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "MotionControllerComponent.h"
 #include "GrabbableObject.h"
+#include "IsGrabbable.h"
 #include "IsPressable.h"
 #include "PressableObject.h"
 #include "IsRotable.h"
@@ -68,4 +69,7 @@ private:
 
 	UPROPERTY()
 		UIsRotable* thingRotate;
+
+	UPROPERTY()
+		UIsGrabbable* thingGrabbed2;
 };

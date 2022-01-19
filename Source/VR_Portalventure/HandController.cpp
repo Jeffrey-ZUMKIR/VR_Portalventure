@@ -60,15 +60,18 @@ void AHandController::GrabObject(AHandController *otherController){
 	TArray<AActor*> outoverlap;
 	this->GetOverlappingActors(outoverlap);
 
+	UE_LOG(LogTemp, Warning, TEXT("%d"), outoverlap.Num());
 	if(outoverlap.Num() > 0){
 		//UE_LOG(LogTemp, Warning, TEXT("Object overlap %s"), *outoverlap[0]->GetName());
 
 		bool bFindObject = false;
 		int check = outoverlap.Num()-1;
-		AGrabbableObject* trycast = nullptr;
+		//AGrabbableObject* trycast = nullptr;
+		UIsGrabbable* trycast = nullptr;
 		while (bFindObject == false)
 		{
-			trycast = dynamic_cast<AGrabbableObject*>(outoverlap[check]);
+			//trycast = dynamic_cast<AGrabbableObject*>(outoverlap[check]);
+			trycast = dynamic_cast<UIsGrabbable*>(outoverlap[check]->FindComponentByClass(UIsGrabbable::StaticClass()));
 			if(trycast != nullptr || check <= 0){
 				bFindObject = true;
 			}
@@ -79,12 +82,13 @@ void AHandController::GrabObject(AHandController *otherController){
 		//UE_LOG(LogTemp, Warning, TEXT("%d"), outoverlap.Num());
 		if(trycast != nullptr){
 			if(trycast->isGrabbed == true){
-				otherController->thingGrabbed = nullptr;
+				otherController->thingGrabbed2 = nullptr;
 			}
-			//UE_LOG(LogTemp, Warning, TEXT("Object overlap %s"), *trycast->GetName());
+			UE_LOG(LogTemp, Warning, TEXT("Object overlap %s"), *trycast->GetOwner()->GetName());
 			trycast->SetMeshPhysic(false);
-			trycast->AttachToComponent(this->GetSkelMesh(),FAttachmentTransformRules::KeepWorldTransform);
-			thingGrabbed = trycast;
+			//trycast->AttachToComponent(this->GetSkelMesh(),FAttachmentTransformRules::KeepWorldTransform);
+			trycast->GetOwner()->AttachToComponent(this->GetSkelMesh(), FAttachmentTransformRules::KeepWorldTransform);
+			thingGrabbed2 = trycast;
 			trycast->isGrabbed = true;
 		}
 
@@ -111,11 +115,11 @@ void AHandController::GrabObject(AHandController *otherController){
 }
 
 void AHandController::LetGoObject(){
-	if(thingGrabbed != nullptr){
-		thingGrabbed->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
-		thingGrabbed->SetMeshPhysic(true);
-		thingGrabbed->isGrabbed = false;
-		thingGrabbed = nullptr;
+	if(thingGrabbed2 != nullptr){
+		thingGrabbed2->GetOwner()->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+		thingGrabbed2->SetMeshPhysic(true);
+		thingGrabbed2->isGrabbed = false;
+		thingGrabbed2 = nullptr;
 	}
 
 	if (thingRotate != nullptr) {
