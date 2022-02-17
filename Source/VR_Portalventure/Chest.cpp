@@ -49,19 +49,6 @@ void AChest::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (!IsCodeFound) {
-		//IsCodeFound = true;
-		for (size_t i = 0; i < TempCode.Num(); i++)
-		{
-			if (Cadenas[i]!=nullptr) {
-				if (Cadenas[i]->GetN_val() != TempCode[i]) {
-					TempCode[i] = Cadenas[i]->GetN_val();
-					CheckCode();
-				}
-			}
-		}
-	}
-
 
 }
 
@@ -70,7 +57,7 @@ void AChest::CheckCode()
 	bool IsCodeCorrect = true;
 	for (size_t i = 0; i < Code.Num(); i++)
 	{
-		if (Code[i] != TempCode[i]) {
+		if (Code[i] != Cadenas[i]->GetN_val()) {
 			IsCodeCorrect = false;
 		}
 	}

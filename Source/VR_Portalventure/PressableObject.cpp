@@ -73,6 +73,7 @@ void APressableObject::IsPressed()
 			AddToN_val(-1);
 			ValCadena->SetText(FText::AsNumber(n_val));
 		}
+
 	}
 }
 

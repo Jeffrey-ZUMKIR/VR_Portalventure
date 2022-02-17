@@ -26,7 +26,7 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 private:
-	UPROPERTY(EditAnywhere)
-	class UBoxComponent * PressBox;
+	/*UPROPERTY(EditAnywhere)
+	class UBoxComponent * PressBox;*/
 		
 };

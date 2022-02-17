@@ -6,9 +6,9 @@
 #include "Components/InputComponent.h"
 #include "MotionControllerComponent.h"
 #include "HandController.h"
-#include "Animation/SkeletalMeshActor.h"
+//#include "Animation/SkeletalMeshActor.h"
 #include "Components/SkeletalMeshComponent.h"
-#include "Animation/AnimSingleNodeInstance.h"
+//#include "Animation/AnimSingleNodeInstance.h"
 #include "Engine/StaticMeshActor.h"
 #include "GameFramework/Actor.h"
 

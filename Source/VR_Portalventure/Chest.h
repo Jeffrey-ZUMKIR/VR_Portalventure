@@ -53,8 +53,8 @@ private:
 	UPROPERTY(EditAnywhere)
 		TArray<int32> Code;
 
-	UPROPERTY(EditAnywhere)
-		TArray<int32> TempCode;
+	/*UPROPERTY(EditAnywhere)
+		TArray<int32> TempCode;*/
 			
 	bool IsCodeFound;
 

@@ -4,17 +4,18 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "IsGrabbable.generated.h"
+#include "ChangeBulbColor.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FBulbEvent);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class VR_PORTALVENTURE_API UIsGrabbable : public UActorComponent
+class VR_PORTALVENTURE_API UChangeBulbColor : public UActorComponent
 {
 	GENERATED_BODY()
 
 public:	
 	// Sets default values for this component's properties
-	UIsGrabbable();
+	UChangeBulbColor();
 
 protected:
 	// Called when the game starts
@@ -24,9 +25,14 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	void SetMeshPhysic(bool hisPhysic);
+	UPROPERTY(BlueprintAssignable)
+		FBulbEvent ChangeColorRequest;
 
-	UPROPERTY(BlueprintReadWrite)
-	bool isGrabbed;
+	UPROPERTY(BlueprintAssignable)
+		FBulbEvent ChangeMatRequest;
+
+	void ChangeBulbColor();
+
+	void ChangeMatColor();
 		
 };

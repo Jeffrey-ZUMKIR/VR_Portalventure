@@ -5,6 +5,10 @@
 
 #include "Animation/SkeletalMeshActor.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "ChangeBulbColor.h"
+#include "Chest.h"
+#include "ControlPanel.h"
+#include "Kismet/GameplayStatics.h"
 
 #include "Lockers.h"
 
@@ -117,8 +121,10 @@ void AHandController::GrabObject(AHandController *otherController){
 void AHandController::LetGoObject(){
 	if(thingGrabbed2 != nullptr){
 		thingGrabbed2->GetOwner()->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
-		thingGrabbed2->SetMeshPhysic(true);
-		thingGrabbed2->isGrabbed = false;
+		if (thingGrabbed2->isGrabbed == true) {
+			thingGrabbed2->SetMeshPhysic(true);
+			thingGrabbed2->isGrabbed = false;
+		}
 		thingGrabbed2 = nullptr;
 	}
 
@@ -151,6 +157,37 @@ void AHandController::PressObject(){
 
 		if(trycast != nullptr){
 			trycast->IsPressed();
+
+			TArray<AActor*> AllChests;
+			UGameplayStatics::GetAllActorsOfClass(GetWorld(), AChest::StaticClass(), AllChests);
+			for (AActor* Actor : AllChests) {
+				dynamic_cast<AChest*>(Actor)->CheckCode();
+			}
+		}
+
+		if (trycast == nullptr) {
+			bFindObject = false;
+			check = outoverlap.Num() - 1;
+
+			UChangeBulbColor* trycast2 = nullptr;
+			while (bFindObject == false) {
+				trycast2 = dynamic_cast<UChangeBulbColor*>(outoverlap[check]->FindComponentByClass(UChangeBulbColor::StaticClass()));
+				if (trycast2 != nullptr || check <= 0) {
+					bFindObject = true;
+				}
+				check--;
+			}
+
+			if (trycast2 != nullptr) {
+				UE_LOG(LogTemp, Warning, TEXT("Change color"));
+				trycast2->ChangeBulbColor();
+
+				TArray<AActor*> AllPanels;
+				UGameplayStatics::GetAllActorsOfClass(GetWorld(), AControlPanel::StaticClass(), AllPanels);
+				for (AActor* Actor : AllPanels) {
+					dynamic_cast<AControlPanel*>(Actor)->CheckCode();
+				}
+			}
 		}
 		
 		
