@@ -38,8 +38,11 @@ private:
 	void moveForwardBackward(float moveY);
 	void moveRightLeft(float moveX);
 
-	void moveRightHandFinger(float moveF);
-	void moveLeftHandFinger(float moveF);
+	void moveRightHandFingerGrab(float moveF);
+	void moveLeftHandFingerGrab(float moveF);
+
+	void moveRightHandFingerTrig(float moveF);
+	void moveLeftHandFingerTrig(float moveF);
 
 	void grabLeftHand();
 	void releaseLeftHand();

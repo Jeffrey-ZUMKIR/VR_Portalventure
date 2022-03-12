@@ -82,8 +82,11 @@ void AVRCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	PlayerInputComponent->BindAxis(TEXT("GoForwardBackward"), this, &AVRCharacter::moveForwardBackward);
 	PlayerInputComponent->BindAxis(TEXT("GoRightLeft"), this, &AVRCharacter::moveRightLeft);
 
-	PlayerInputComponent->BindAxis(TEXT("MoveRightHand"), this, &AVRCharacter::moveRightHandFinger);
-	PlayerInputComponent->BindAxis(TEXT("MoveLeftHand"), this, &AVRCharacter::moveLeftHandFinger);
+	PlayerInputComponent->BindAxis(TEXT("MoveRightHandGrab"), this, &AVRCharacter::moveRightHandFingerGrab);
+	PlayerInputComponent->BindAxis(TEXT("MoveLeftHandGrab"), this, &AVRCharacter::moveLeftHandFingerGrab);
+
+	PlayerInputComponent->BindAxis(TEXT("MoveRightHandTrig"), this, &AVRCharacter::moveRightHandFingerTrig);
+	PlayerInputComponent->BindAxis(TEXT("MoveLeftHandTrig"), this, &AVRCharacter::moveLeftHandFingerTrig);
 
 	PlayerInputComponent->BindAction(TEXT("GrabLeft"), IE_Pressed, this, &AVRCharacter::grabLeftHand);
 	PlayerInputComponent->BindAction(TEXT("GrabLeft"), IE_Released, this, &AVRCharacter::releaseLeftHand);
@@ -103,12 +106,24 @@ void AVRCharacter::moveRightLeft(float moveX){
 	AddMovementInput(Camera->GetRightVector(),moveX/2);
 }
 
-void AVRCharacter::moveRightHandFinger(float moveF){
-	TheRightController->handPower = moveF;
+void AVRCharacter::moveRightHandFingerGrab(float moveF){
+	TheRightController->handPowerGrab = (moveF / 10) * 8;
+	TheRightController->handPower = TheRightController->handPowerGrab + TheRightController->handPowerTrig;
 }
 
-void AVRCharacter::moveLeftHandFinger(float moveF){
-	TheLeftController->handPower = moveF;
+void AVRCharacter::moveLeftHandFingerGrab(float moveF){
+	TheLeftController->handPowerGrab = (moveF / 10) * 8;
+	TheLeftController->handPower = TheLeftController->handPowerGrab + TheLeftController->handPowerTrig;
+}
+
+void AVRCharacter::moveRightHandFingerTrig(float moveF) {
+	TheRightController->handPowerTrig = (moveF / 10) * 2;
+	TheRightController->handPower = TheRightController->handPowerGrab + TheRightController->handPowerTrig;
+}
+
+void AVRCharacter::moveLeftHandFingerTrig(float moveF) {
+	TheLeftController->handPowerTrig = (moveF / 10) * 2;
+	TheLeftController->handPower = TheLeftController->handPowerGrab + TheLeftController->handPowerTrig;
 }
 
 void AVRCharacter::grabLeftHand(){

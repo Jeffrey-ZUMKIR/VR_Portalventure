@@ -43,6 +43,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	float handPower = 0.f;
 
+	float handPowerGrab = 0.f;
+	float handPowerTrig = 0.f;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
