@@ -57,7 +57,7 @@ private:
 	UPROPERTY()
 	class UCameraComponent* Camera;
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	class USceneComponent * VRRoot;
 
 	UPROPERTY()

@@ -1,7 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Kismet/KismetMathLibrary.h"
+
 #include "IsRotable.h"
+#include "Kismet/KismetMathLibrary.h"
 
 // Sets default values for this component's properties
 UIsRotable::UIsRotable()

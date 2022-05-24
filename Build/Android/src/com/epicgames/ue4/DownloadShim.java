@@ -1,10 +1,10 @@
 package com.epicgames.ue4;
 
-import com.YourCompany.VR_Portalventure.OBBDownloaderService;
-import com.YourCompany.VR_Portalventure.DownloaderActivity;
+import com.JZum.PortalVenture.OBBDownloaderService;
+import com.JZum.PortalVenture.DownloaderActivity;
 import android.app.Activity;
 import com.google.android.vending.expansion.downloader.Helpers;
-import com.YourCompany.VR_Portalventure.OBBData;
+import com.JZum.PortalVenture.OBBData;
 
 
 public class DownloadShim

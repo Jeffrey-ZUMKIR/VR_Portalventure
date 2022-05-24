@@ -3,6 +3,7 @@
 
 #include "ControlPanel.h"
 #include "ChangeBulbColor.h"
+#include <Runtime/Engine/Classes/Kismet/GameplayStatics.h>
 
 // Sets default values
 AControlPanel::AControlPanel()
@@ -39,6 +40,14 @@ void AControlPanel::CheckCode()
 
 		if (IsCodeCorrect) {
 			UE_LOG(LogTemp, Warning, TEXT("Correct color code"));
+			for (AColorBulb* bulb : ColorBulb)
+			{
+				bulb->IsActivate = false;
+				TArray<AActor*> FoundActors;
+				UGameplayStatics::GetAllActorsOfClass(GetWorld(), ClassToFind, FoundActors);
+				FoundActors[0]->SetActorHiddenInGame(false);
+
+			}
 		}
 	}
 }

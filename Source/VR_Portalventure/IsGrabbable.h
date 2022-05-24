@@ -28,5 +28,8 @@ public:
 
 	UPROPERTY(BlueprintReadWrite)
 	bool isGrabbed;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool isIngredient;
 		
 };

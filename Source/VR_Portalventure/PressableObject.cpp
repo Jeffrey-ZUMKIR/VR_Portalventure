@@ -125,7 +125,7 @@ void APressableObject::SetIsCodeFound(bool IsCode)
 {
 	this->IsCodeFound = IsCode;
 	if (IsCode) {
-		FColor correctCol(100, 255, 0, 255);
+		FColor correctCol(6, 255, 0, 255);
 		ValCadena->SetTextRenderColor(correctCol);
 	}
 }

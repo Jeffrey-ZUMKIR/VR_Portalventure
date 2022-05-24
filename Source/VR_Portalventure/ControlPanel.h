@@ -31,6 +31,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void PanelActivate(bool Activate);
 
+	UPROPERTY(EditAnywhere)
+		TSubclassOf<AActor> ClassToFind;
+
 private:
 	UPROPERTY(EditAnywhere)
 		TArray<AColorBulb*> ColorBulb;
